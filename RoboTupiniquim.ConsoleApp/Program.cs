@@ -1,102 +1,97 @@
-﻿namespace RoboTupiniquim.ConsoleApp
+﻿namespace RoboTupiniquim.ConsoleApp;
+
+internal class Program
 {
-    internal class Program
+    private static int posicaoX;
+    private static int posicaoY;
+    private static char direcao = 'N';
+
+    private static void Main(string[] args)
     {
-        // variável global
-        static int posicaoX = 0;
-        static int posicaoY = 0;
-        static char direcao = 'N';
+        var robosEnviados = 2;
 
-        static void Main(string[] args)
+        var coordenadas = new string[robosEnviados];
+        var ordensIniciais = new string[robosEnviados];
+
+        for (var robo = 0; robo < robosEnviados; robo++)
         {
-            int robosEnviados = 2;
+            coordenadas[robo] = Console.ReadLine();
+            ordensIniciais[robo] = Console.ReadLine();
+        }
 
-            string[] coordenadas = new string[robosEnviados];
-            string[] ordensIniciais = new string[robosEnviados];
+        Console.Clear();
 
-            // preenchimento de ordens do robô
-            for (int robo = 0; robo < robosEnviados; robo++)
+        for (var robo = 0; robo < robosEnviados; robo++)
+        {
+            var coordenadasAtuais = coordenadas[robo].Split(' ');
+            var ordens = ordensIniciais[robo].ToCharArray();
+
+            posicaoX = Convert.ToInt32(coordenadasAtuais[0]);
+            posicaoY = Convert.ToInt32(coordenadasAtuais[1]);
+            direcao = Convert.ToChar(coordenadasAtuais[2]);
+
+            for (var ordem = 0; ordem < ordens.Length; ordem++)
             {
-                coordenadas[robo] = Console.ReadLine();
-                ordensIniciais[robo] = Console.ReadLine();
+                var ordemAtual = ordens[ordem];
+
+                if (ordemAtual == 'E')
+                    VirarEsquerda();
+
+                else if (ordemAtual == 'D')
+                    VirarDireita();
+
+                else if (ordemAtual == 'M')
+                    MoverRobo();
             }
 
-            Console.Clear();
-
-            // processar
-            for (int robo = 0; robo < robosEnviados; robo++)
-            {
-                string[] coordenadasAtuais = coordenadas[robo].Split(' ');
-                char[] ordens = ordensIniciais[robo].ToCharArray();
-
-                posicaoX = Convert.ToInt32(coordenadasAtuais[0]);
-                posicaoY = Convert.ToInt32(coordenadasAtuais[1]);
-                direcao = Convert.ToChar(coordenadasAtuais[2]);
-
-                for (int ordem = 0; ordem < ordens.Length; ordem++)
-                {
-                    char ordemAtual = ordens[ordem];
-
-                    if (ordemAtual == 'E')
-                        VirarEsquerda();
-
-                    else if (ordemAtual == 'D')
-                        VirarDireita();
-
-                    else if (ordemAtual == 'M')
-                        MoverRobo();
-                }
-
-                Console.WriteLine($"{posicaoX} {posicaoY} {direcao}");
-            }
-
-            Console.ReadLine();
+            Console.WriteLine($"{posicaoX} {posicaoY} {direcao}");
         }
 
-        private static void MoverRobo()
-        {
-            if (direcao == 'N')
-                posicaoY++;
+        Console.ReadLine();
+    }
 
-            else if (direcao == 'S')
-                posicaoY--;
+    private static void MoverRobo()
+    {
+        if (direcao == 'N')
+            posicaoY++;
 
-            else if (direcao == 'O')
-                posicaoX--;
+        else if (direcao == 'S')
+            posicaoY--;
 
-            else if (direcao == 'L')
-                posicaoX++;
-        }
+        else if (direcao == 'O')
+            posicaoX--;
 
-        private static void VirarDireita()
-        {
-            if (direcao == 'N')
-                direcao = 'L';
+        else if (direcao == 'L')
+            posicaoX++;
+    }
 
-            else if (direcao == 'L')
-                direcao = 'S';
+    private static void VirarDireita()
+    {
+        if (direcao == 'N')
+            direcao = 'L';
 
-            else if (direcao == 'S')
-                direcao = 'O';
+        else if (direcao == 'L')
+            direcao = 'S';
 
-            else if (direcao == 'O')
-                direcao = 'N';
+        else if (direcao == 'S')
+            direcao = 'O';
 
-        }
+        else if (direcao == 'O')
+            direcao = 'N';
+    }
 
-        private static void VirarEsquerda()
-        {
-            if (direcao == 'N')
-                direcao = 'O';
+    private static void VirarEsquerda()
+    {
+        if (direcao == 'N')
+            direcao = 'O';
 
-            else if (direcao == 'O')
-                direcao = 'S';
+        else if (direcao == 'O')
+            direcao = 'S';
 
-            else if (direcao == 'S')
-                direcao = 'L';
+        else if (direcao == 'S')
+            direcao = 'L';
 
-            else if (direcao == 'L')
-                direcao = 'N';
-        }
+        else if (direcao == 'L')
+            direcao = 'N';
     }
 }
